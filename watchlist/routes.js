@@ -20,7 +20,7 @@ function WatchlistRoutes(app) {
 		}
 	};
 
-	app.put("/api/add-to-watchlist", addTickerToWatchList);
-	app.put("/api/delete-from-watchlist", deleteTickerToWatchList);
+	app.put("/api/watchlist/add-to-watchlist", addTickerToWatchList);
+	app.put("/api/watchlist/delete-from-watchlist", deleteTickerToWatchList);
 }
 export default WatchlistRoutes;

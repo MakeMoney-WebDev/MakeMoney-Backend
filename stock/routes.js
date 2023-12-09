@@ -18,19 +18,25 @@ const getTickerData = async (ticker) => {
 
 async function StockRoutes(app) {
 	app.get("/api/stock/:ticker", async (req, res) => {
-		const { ticker } = req.params;
-		const data = await getTickerData(ticker);
+		try {
+			const { ticker } = req.params;
+			const data = await getTickerData(ticker);
+			if (!data.chart.result) {
+				throw new Error("Invalid ticker!");
+			}
+			const quote = data.chart.result[0].indicators.quote[0];
+			const stock = {
+				ticker: data.chart.result[0].meta.symbol,
+				open: quote.open[0],
+				close: quote.close[0],
+				high: quote.high[0],
+				low: quote.low[0],
+			};
 
-		const quote = data.chart.result[0].indicators.quote[0];
-		const stock = {
-			ticker: data.chart.result[0].meta.symbol,
-			open: quote.open[0],
-			close: quote.close[0],
-			high: quote.high[0],
-			low: quote.low[0],
-		};
-
-		res.send(stock);
+			res.send(stock);
+		} catch (error) {
+			res.status(400).json({ message: error.message });
+		}
 	});
 }
 
