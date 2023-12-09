@@ -4,7 +4,6 @@ export const findWatchlistById = async (watchlistId) => model.findById(watchlist
 export const addTickerToWatchList = async (watchlistId, ticker) => {
 	try {
 		const watchlist = await findWatchlistById(watchlistId);
-		console.log("found watchlist" + watchlist);
 
 		if (watchlist.listOfTickers.includes(ticker)) {
 			throw new Error("This stock is already on your watchlist");
@@ -26,7 +25,6 @@ export const deleteTickerFromWatchList = async (watchlistId, ticker) => {
 		if (!watchlist.listOfTickers.includes(ticker)) {
 			throw new Error(`Ticker ${ticker} is not in watchlist`);
 		}
-
 		watchlist.listOfTickers = watchlist.listOfTickers.filter((t) => t != ticker);
 
 		const updatedWatchlist = await watchlist.save();

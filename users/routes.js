@@ -1,5 +1,4 @@
 import * as dao from "./dao.js";
-import Watchlist from "../watchlist/model.js";
 
 function UserRoutes(app) {
 	const deleteUser = async (req, res) => {
@@ -13,6 +12,14 @@ function UserRoutes(app) {
 	const findUserById = async (req, res) => {
 		try {
 			const user = await dao.findUserById(req.params.userId);
+			res.json(user);
+		} catch (error) {
+			res.status(400).json({ message: "User not found" });
+		}
+	};
+	const findUserByUsername = async (req, res) => {
+		try {
+			const user = await dao.findUserByUsername(req.params.username);
 			res.json(user);
 		} catch (error) {
 			res.status(400).json({ message: "User not found" });
@@ -61,6 +68,7 @@ function UserRoutes(app) {
 
 	app.get("/api/users", findAllUsers);
 	app.get("/api/users/:userId", findUserById);
+	app.get("/api/users/:username", findUserByUsername);
 	app.put("/api/users/:userId", updateUser);
 	app.delete("/api/users/:userId", deleteUser);
 	app.post("/api/users/signup", signup);
