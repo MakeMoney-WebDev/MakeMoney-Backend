@@ -67,7 +67,7 @@ function UserRoutes(app) {
 	};
 
 	app.get("/api/users", findAllUsers);
-	app.get("/api/users/:userId", findUserById);
+	// app.get("/api/users/:userId", findUserById);
 	app.get("/api/users/:username", findUserByUsername);
 	app.put("/api/users/:userId", updateUser);
 	app.delete("/api/users/:userId", deleteUser);
