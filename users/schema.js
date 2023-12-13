@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Watchlist",
 		},
+		role: {
+            type: String,
+            enum: ['user', 'admin'],
+            default: 'user'
+        }
 	},
 	{ collection: "users" }
 );
